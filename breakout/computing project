@@ -51,8 +51,8 @@ class Ball(pygame.sprite.Sprite):
     # Direction of ball (in degrees)
     direction = 200
 
-    width = 700
-    height = 10
+    width = 20
+    height = 20
 
     # Constructor. Pass in the color of the block, and its x and y position
     def __init__(self):
@@ -121,8 +121,8 @@ class Player(pygame.sprite.Sprite):
         # Call the parent's constructor
         pygame.sprite.Sprite.__init__(self)
 
-        self.width = 500
-        self.height = 50
+        self.width = 100
+        self.height = 20
         self.image = pygame.Surface([self.width, self.height])
         self.image.fill((white))
 
