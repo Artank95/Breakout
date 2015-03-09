@@ -10,6 +10,7 @@ blue = (0, 0, 255)
 block_width =  23
 block_height = 20
 
+
 class Block(pygame.sprite.Sprite):
     """This class represents each block that will get knocked out by the ball
     It derives from the "Sprite" class in Pygame """

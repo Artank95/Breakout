@@ -156,6 +156,13 @@ def text_objects(text,font):
     textSurface = font.render(text, True, white)
     return textSurface, textSurface.get_rect()
 
+def text(text, x_text, y_text, font_size):
+    TextFont = pygame.font.Font('freesansbold.ttf', font_size)
+    TextSurf, TextRect = text_objects(text, TextFont)
+    TextRect.center = ((x_text), (y_text))
+    screen.blit(TextSurf, TextRect)
+
+
 
 def button(msg, button_x, button_y, button_w, button_h,colour,action= None): 
    
@@ -169,13 +176,16 @@ def button(msg, button_x, button_y, button_w, button_h,colour,action= None):
     if button_x+button_w > mouse_x > button_x and button_y+button_h > mouse_y > button_y:
         pygame.draw.rect(screen, colour, (button_x,button_y,button_w,button_h))
         if click[0] == 1 and action!= None:
-            if action == "play":
+            if action == "Play":
                 game_loop()
                
-            elif action == "quit":
+            elif action == "Quit":
                 pygame.quit()
                 quit()
-   
+            
+            elif action == "Instructions":
+                instructions()
+
     smallText = pygame.font.Font("freesansbold.ttf", 30)
     textSurf, textRect = text_objects(msg, smallText)
     textRect.center = ((button_x+(button_w/2),(button_y+(100/2))))
@@ -201,18 +211,34 @@ def game_intro():
         screen.fill(black)
         largeText=pygame.font.Font("freesansbold.ttf",50)
         TextSurf, TextRect = text_objects("Breakout", largeText)
-        TextRect.center = ((display_width/2), (display_height/4))
+        TextRect.center = ((display_width/2), (display_height/6))
         screen.blit(TextSurf, TextRect)
         
-        button("start game",300,200,200,100,blue,"play")
-        button("quit game",300,400,200,100,blue,"quit")  
-        
+        button("Start game",300,150,200,100,blue,"Play")
+        button("Quit game",300,450,200,100,blue,"Quit")  
+        button("Instructions",300,300,200,100,blue,"Instructions")
         
         pygame.display.update()
 
 
-
-
+def instructions():
+    done = True
+    while done:
+        for event in pygame.event.get():
+            if event.type==pygame.QUIT:
+                pygame.quit() 
+                quit()
+        screen.fill(black)
+        
+        text("The objective of the game is to break all the bricks on the screen", 400, 100, 15)
+        text("Do not let the ball hit the floor or else the game will end",400, 200, 15)
+        text("Use the mouse to direct the paddle in order to hit the ball and stop it from touching the floor",400, 300, 15)
+        
+        button("start game",300,400,200,100,blue,"Play")
+        button("quit game",300,500,200,100,blue,"Quit")  
+        
+        
+        pygame.display.update()
 
 
 
@@ -303,7 +329,9 @@ def game_loop():
             textpos = text.get_rect(centerx=background.get_width()/2)
             textpos.top = 300
             screen.blit(text, textpos)
-            
+            pygame.display.update()
+            time.sleep(2)
+            game_intro()
     
     
         # See if the ball hits the player paddle
